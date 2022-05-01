@@ -12,8 +12,7 @@ vector<int> bf_vec[401];
 pair<int, int> check_best(int student) {
     int max_bf = 0, max_zero = 0, bf, zero;
     pair<int, int> p = {N, N};
-    //ans_y, ans_x;
-
+    
     for(int y = 1; y <= N; y++) {
         for(int x = 1; x <= N; x++) {
             if(map[y][x] != 0) continue;
@@ -56,17 +55,11 @@ int main() {
     pair<int, int> p;
     cin >> N;
     N2 = N * N;
-    //zero.emplace_back(1, 1);
-    //for(int i = 1; i < N2; i++) zero.emplace_back(i / N + 1, i % N + 1);
-    /*for(int i = 0; i < N2; i++) {
-        cout << zero[i].first << " " << zero[i].second << '\n';
-    }*/
     for(int i = 0; i < N2; i++) {
         cin >> student >> bf[0] >> bf[1] >> bf[2] >> bf[3];
         bf_vec[student] = {bf[0], bf[1], bf[2], bf[3]};
         if(i == 0) {
             map[2][2] = student;
-            //st_to_axis[student] = {2, 2};
             continue;
         }
         p = check_best(student);
@@ -76,7 +69,6 @@ int main() {
     int ans = 0, temp, arr[5] = {0, 1, 10, 100, 1000};
     for(int y = 1; y <= N; y++) {
         for(int x = 1; x <= N; x++) {
-            //cout << map[y][x] << " ";
             temp = 0;
             for(int i = 0; i < 4; i++) {
                 int new_y = y + dy[i], new_x = x + dx[i];
@@ -90,7 +82,6 @@ int main() {
             }
             ans += arr[temp];
         }
-        //cout << '\n';
     }
     cout << ans << '\n';
 }
