@@ -1,6 +1,5 @@
 #include <iostream>
 #include <vector>
-#include <stack>
 
 using namespace std;
 int N, dp[5001];
@@ -41,5 +40,4 @@ int main(){
     int ans = dp[N];
     if(ans == 0 || N != left) ans = -1;
     cout << ans;
-    //<< " -> " << N << ", " << left;
 }
