@@ -1,20 +1,17 @@
-#include <iostream>
-#include <string>
 #include <vector>
-#include <map>
+#include <unordered_map>
 
 using namespace std;
 
-map<long long, long long> hotel;
+unordered_map<long long, long long> hotel;
 long long reservation(long long room) {
     auto itr = hotel.find(room);
-    if(itr == hotel.end()) {
-        hotel.insert({room, room+1});
+    if(hotel[room] == 0) {
+        hotel[room] =  room+1;
         return room;
     } else {
-        long long ll = reservation(itr->second);
-        itr->second = ll;
-        return ll;
+        hotel[room] = reservation(itr->second);
+        return hotel[room];
     }
 }
 
