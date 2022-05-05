@@ -1,14 +1,12 @@
 #include <iostream>
-#include <string>
 #include <vector>
-#include <set>
 #include <queue>
 #include <algorithm>
 
 #define INF 50000001
 
 using namespace std;
-int n, m, t, s, g, h, src, dest, cost, T, node_now, dist_now, next_node, must_pass;
+int n, m, t, s, g, h, src, dest, cost, T, node_now, dist_now, next_node;
 vector<pair<int, int>> vec[2001];
 priority_queue<pair<int, int>> que;
 int dist[3][2001];
@@ -33,14 +31,6 @@ void dijkstra(int start, int dist_num) {
 int main() {
     ios_base::sync_with_stdio(false);
     cin.tie(nullptr); cout.tie(nullptr);
-    //vector<vector<int>> input = {{1, 2, 1}, {3, 2, 1}, {2, 4, 1}};
-    //vector<int> traps = {2, 3};
-    //solution(4, 1, 4, input, traps);
-    //cout << answer;
-
-
-    bool check[2001], check2[2001], check3[2001];
-
     vector<int> ans;
 
     cin >> T;
@@ -52,7 +42,6 @@ int main() {
         for(int i = 0; i <= n; i++) {
             vec[i] = {};
             dist[0][i] = dist[1][i] = dist[2][i] = INF;
-            //check[i] = check2[i] = check3[i] = false;
         }
         for(int i = 0; i < m; i++) {
             cin >> src >> dest >> cost;
@@ -71,11 +60,11 @@ int main() {
 
         ans.clear();
         int g_to_h = dist[1][h];
-        for(int node : dest_vec) { if(dist[0][g] + g_to_h + dist[2][node] == dist[0][node]) ans.emplace_back(node);}
-        for(int node : dest_vec) { if(dist[0][h] + g_to_h + dist[1][node] == dist[0][node]) ans.emplace_back(node);}
-
+        for(int node : dest_vec) { 
+            if(dist[0][g] + g_to_h + dist[2][node] == dist[0][node]) ans.emplace_back(node);
+            else if(dist[0][h] + g_to_h + dist[1][node] == dist[0][node]) ans.emplace_back(node);
+        }
         sort(ans.begin(), ans.end());
-        ans.erase(unique(ans.begin(), ans.end()), ans.end());
         for(int num : ans) {
             cout << num << " ";
         }
