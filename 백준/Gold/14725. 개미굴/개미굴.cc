@@ -4,7 +4,6 @@
 #include <cstring>
 #include <map>
 
-
 using namespace std;
 
 
@@ -31,7 +30,6 @@ void insert_str(StringTrieNode &node_now, vector<string> &vec, int idx) {
 int main() {
     int N, K;
     cin >> N;
-    //TrieNode root;
     string str;
     for(int i = 0; i < N; i++) {
         cin >> K;
