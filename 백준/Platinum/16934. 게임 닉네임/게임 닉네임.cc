@@ -3,8 +3,6 @@
 #include<vector>
 #include<cstring>
 #include <map>
-#include <algorithm>
-#include <queue>
 
 #define C_SIZE 26
 using namespace std;
