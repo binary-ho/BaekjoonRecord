@@ -1,54 +1,33 @@
 #include<iostream>
 #include<algorithm>
 #include<vector>
-#include <queue>
 #include <map>
 
-
-// #define C_SIZE 63
 using namespace std;
 
 int limit;
 long long ans;
-char buffer[21];
-string firstBinary(long long num) {
-    string str = "";
-    while(num != 0) {
-        str += to_string(num & 1);
-        num >>= 1;
-    }
-    reverse(str.begin(), str.end());
-    return str;
-}
+
 string makeBinary(long long num) {
     string str = "";
     while(num != 0) {
         str += to_string(num & 1);
         num >>= 1;
     }
-    while(str.size() < limit) str += "0";
+    if(limit != -1) while(str.size() < limit) str += "0";
     reverse(str.begin(), str.end());
     return str;
 }
 
 struct TrieNode
 {
-    bool terminal = false;
     TrieNode *children[2];
 
     TrieNode() {
-        terminal = false;
-        //memset(children, 0, sizeof(children));
         children[0] = children[1] = {};
     }
-    /*~TrieNode() {
-        //for (int i = 0; i < C_SIZE; i++) if(children[i]) delete children[i];
-        delete children;
-    }*/
     void insertString(const string &str, int idx) {
-        if(!str[idx]) {
-            terminal = true;
-        } else {
+        if(str[idx]) {
             int next = str[idx] - '0';
             if (children[next] == nullptr) {
                 children[next] = new TrieNode();
@@ -58,9 +37,9 @@ struct TrieNode
     }
 
     void find(const string &str, int idx, long long num) {
-        if(!str[idx]) { 
+        if(!str[idx]) {
             ans = ans < num ? num : ans;
-            return; 
+            return;
         }
         num <<= 1;
         if(children[1 - (str[idx] - '0')]) {
@@ -82,8 +61,10 @@ int main() {
         cin >> vec[i];
     }
     sort(vec.begin(), vec.end(), greater<long long>());
+    vec.erase(unique(vec.begin(), vec.end()), vec.end());
+    limit = -1;
     string str;
-    str = firstBinary(vec[0]);
+    str = makeBinary(vec[0]);
     str_vec.emplace_back(str);
     limit = str.size();
     TrieNode root;
