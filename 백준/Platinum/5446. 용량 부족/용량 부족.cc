@@ -128,10 +128,10 @@ int main() {
             cin >> buffer;
             root.insert2(buffer);
         }
-        //int ans = N1 - bfs(root);
-        dfs_cnt = 0;
-        dfs(root);
-        int ans = N1 - dfs_cnt;
+        int ans = N1 - bfs(root);
+        //dfs_cnt = 0;
+        //dfs(root);
+        //int ans = N1 - dfs_cnt;
         cout << ans << '\n';
     }
 }
