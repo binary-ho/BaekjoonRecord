@@ -1,9 +1,7 @@
 #include<iostream>
-#include<string>
 #include<vector>
 #include<queue>
 #include<algorithm>
-#include <map>
 
 using namespace std;
 
@@ -21,7 +19,6 @@ int main() {
     sort(vec.begin(), vec.end());
     cin >> d;
     priority_queue<int> que;
-    queue<int> temp;
     int ans = 0, cnt = 0;
     for(int i = 0; i < N; i++) {
         if(vec[i].first - vec[i].second> d) continue;
@@ -30,20 +27,7 @@ int main() {
         }
         que.push(-vec[i].second);
         cnt = que.size();
-        if(ans < cnt) {
-            ans = cnt;
-            /*cout << ans << " ";
-            while(!que.empty()) {
-                cout << -que.top() << " ";
-                temp.push(que.top());
-                que.pop();
-            }
-            while(!temp.empty()) {
-                que.push(temp.front());
-                temp.pop();
-            }
-            cout << '\n';*/
-        }
+        if(ans < cnt) ans = cnt;
     }
     cout << ans << '\n';
 
