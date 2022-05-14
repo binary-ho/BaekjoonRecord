@@ -65,7 +65,7 @@ void bfs() {
                     map[new_y][new_x] = '.';
                     //docCheck[new_y][new_x] = false;
                     doc_cnt++;
-                    //if(doc_lim == doc_cnt) return;
+                    if(doc_lim == doc_cnt) return;
                     //cout << " new doc!";
                 }
                 //cout << '\n';
