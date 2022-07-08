@@ -11,6 +11,7 @@ class Pos {
 public class Main {
     static int ans = 100;
     static int testTest = 100;
+    static int zSize;
     static List<Pos> z = new ArrayList<>();
     static int[][] s = new int[5][5];
     static boolean[][] v = new boolean[5][5];
@@ -27,46 +28,34 @@ public class Main {
                 }
             }
         }
-
-        fill(0, 0, new ArrayList<>());
+        zSize = z.size();
+        fill(0, new ArrayList<>());
 
         System.out.println(ans);
     }
 
-    static void fill(int idx, int cnt, List<Pos> l) {
-        
-        if (cnt == z.size()) {
+    static void fill(int idx, List<Pos> l) {
+        if (l.size() == zSize) {
             for (Pos p : l) s[p.r][p.c] = 1;
             boolean b = chk(l.get(0).r, l.get(0).c);
-            testTest = 100;
-            List<Integer> list = new ArrayList<>();
-            per(0, z.size(), 0, list, l);
-            //per(int idx, int length, int num, List<Integer> st, List<Pos> l)
-            if (b) ans = min(ans, testTest);
+            if(b) {
+                testTest = 100;
+                per(0, new ArrayList<>(), l);
+                ans = min(ans, testTest);
+            }
             for (Pos p : l) s[p.r][p.c] = 0;
             return;
         }
         if (idx == 25) {
             return;
         }
-
         l.add(new Pos(idx / 5, idx % 5));
-        fill(idx + 1, cnt + 1, l);
+        fill(idx + 1, l);
         l.remove(l.size() - 1);
-        fill(idx + 1, cnt, l);
+        fill(idx + 1, l);
     }
 
-    static int dist(List<Pos> l) {
-        int ret = 0;
-        for (int i = 0; i < z.size(); i++) {
-            Pos p1 = z.get(i);
-            Pos p2 = l.get(i);
-            ret += abs(p1.r - p2.r) + abs(p1.c - p2.c);
-        }
-        return ret;
-    }
-
-    static int dist2(List<Integer> st, List<Pos> l) {
+    static void dist(List<Integer> st, List<Pos> l) {
         int ret = 0;
         for (int i = 0; i < z.size(); i++) {
             Pos p1 = z.get(i);
@@ -75,9 +64,7 @@ public class Main {
         }
         if(testTest > ret) {
             testTest = ret;
-            //System.out.println(testTest);
         }
-        return ret;
     }
 
     static boolean chk(int r, int c) {
@@ -114,21 +101,16 @@ public class Main {
     static int min(int a, int b) {
         return a < b ? a : b;
     }
-    static void per(int idx, int length, int num, List<Integer> st, List<Pos> l) {
-        if(idx == length) {
-            dist2(st, l);
-            for(Integer i : st) {
-                //System.out.print(i);
-            }
-            //System.out.println();
+    static void per(int idx, List<Integer> st, List<Pos> l) {
+        if(idx == zSize) {
+            dist(st, l);
             return;
         }
-        for(int i = 0; i < length; i++) {
-            if((num & (1<<i)) > 0) { continue; }
+        for(int i = 0; i < zSize; i++) {
+            if(st.contains(i)) continue;
             st.add(i);
-            per(idx + 1, length, (num | (1 << i)), st, l);
+            per(idx + 1, st, l);
             st.remove(st.size() - 1);
         }
-        return;
     }
 }
