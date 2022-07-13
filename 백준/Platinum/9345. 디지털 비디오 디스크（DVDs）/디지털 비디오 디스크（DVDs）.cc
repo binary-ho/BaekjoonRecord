@@ -3,7 +3,6 @@
 #include <algorithm>
 using namespace std;
 int T, N, K, Q, A, B;
-// min, max
 int tree_min[1<<18];
 int tree_max[1<<18];
 int remember_idx[100001];
@@ -13,7 +12,6 @@ void make_tree(int node_now, int start, int end) {
         tree_min[node_now] = tree_max[node_now] = start;
         remember_idx[start] = node_now;
         return;
-        // return tree[node_now] = arr[start];
     }
     int mid = ((start + end) >> 1);
     make_tree(node_now*2, start, mid);
@@ -35,7 +33,6 @@ void update_tree(int target_node) {
 
 
 int is_series_min(int node_now, int start, int end) {
-    //if(start == end) return tree[node_now].first;
     if(A <= start && end <= B) return tree_min[node_now];
     if(tree_min[node_now] > A || end < A || B < start) return 100001;
     int mid = ((start +end)>>1);
@@ -47,7 +44,6 @@ int is_series_min(int node_now, int start, int end) {
 }
 
 int is_series_max(int node_now, int start, int end) {
-    //if(start == end) return tree[node_now].second;
     if(A <= start && end <= B) return tree_max[node_now];
     if(tree_max[node_now] < B || end < A || B < start) return -1;
     int mid = ((start +end)>>1);
@@ -73,7 +69,6 @@ int main() {
                 update_tree(B);
                 continue;
             }
-            //printf("min: %d, max: %d\n", is_series_min(1,1,N,A,B), is_series_max(1,1,N,A,B));
             if(is_series_min(1,1,N) !=A || is_series_max(1,1,N) !=B) printf("NO\n");
             else printf("YES\n");
         }
