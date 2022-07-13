@@ -11,7 +11,6 @@ int remember_idx[100001];
 void make_tree(int node_now, int start, int end) {
     if(start == end) {
         tree_min[node_now] = tree_max[node_now] = start;
-        // start 번의 DVD는 실제 트리의 node_now 번째 idx에 있다!!
         remember_idx[start] = node_now;
         return;
         // return tree[node_now] = arr[start];
@@ -35,33 +34,32 @@ void update_tree(int target_node) {
 }
 
 
-// 최소값은 내려갈 수록 커지지 더 작아지지는 않는다
 int is_series_min(int node_now, int start, int end) {
-    if(tree_min[node_now] > A || end < A || B < start) return 100001;
+    //if(start == end) return tree[node_now].first;
     if(A <= start && end <= B) return tree_min[node_now];
+    if(tree_min[node_now] > A || end < A || B < start) return 100001;
     int mid = ((start +end)>>1);
     int left_one, right_one;
     left_one = right_one = 100001;
-    if(tree_min[node_now*2] <= A && mid >= A && start <= B) left_one = is_series_min(node_now*2, start, mid);
-    if(tree_min[node_now*2+1] <= A && end >= A && mid+1 <= B) right_one = is_series_min(node_now*2+1, mid+1, end);
+    if(mid >= A && start <= B && tree_min[node_now*2] <= A) left_one = is_series_min(node_now*2, start, mid);
+    if(end >= A && mid+1 <= B && tree_min[node_now*2+1] <= A) right_one = is_series_min(node_now*2+1, mid+1, end);
     return left_one < right_one ? left_one : right_one;
 }
 
-// 최대값도 작아지기만 하지 더 커지지는 않아
 int is_series_max(int node_now, int start, int end) {
-    if(tree_max[node_now] < B && end < A || B < start) return 0;
+    //if(start == end) return tree[node_now].second;
     if(A <= start && end <= B) return tree_max[node_now];
+    if(tree_max[node_now] < B || end < A || B < start) return -1;
     int mid = ((start +end)>>1);
     int left_one, right_one;
-    left_one = right_one = 0;
-    if(tree_max[node_now*2] >= B && mid >= A && start <= B) left_one = is_series_max(node_now*2, start, mid);
-    if(tree_max[node_now*2+1] >= B && end >= A && mid+1 <= B) right_one = is_series_max(node_now*2+1, mid+1, end);
+    left_one = right_one = -1;
+    if(mid >= A && start <= B && tree_max[node_now*2] >= B) left_one = is_series_max(node_now*2, start, mid);
+    if(end >= A && mid+1 <= B && tree_max[node_now*2+1] >= B) right_one = is_series_max(node_now*2+1, mid+1, end);
     return left_one > right_one ? left_one : right_one;
 }
 
 
 int main() {
-
     scanf("%d", &T);
     while(T--) {
         scanf("%d %d", &N, &K);
@@ -76,7 +74,7 @@ int main() {
                 continue;
             }
             //printf("min: %d, max: %d\n", is_series_min(1,1,N,A,B), is_series_max(1,1,N,A,B));
-            if(is_series_min(1,1,N)!=A || is_series_max(1,1,N)!=B) printf("NO\n");
+            if(is_series_min(1,1,N) !=A || is_series_max(1,1,N) !=B) printf("NO\n");
             else printf("YES\n");
         }
     }
