@@ -8,7 +8,7 @@ int remember_idx[ARR_SIZE];
 long long make_tree(int node_now, int start, int end) {
     if(start == end) {
         remember_idx[start] = node_now;
-        return tree[node_now] = start;
+        return tree[node_now] = arr[start];
     }
     int mid = ((start + end) >> 1);
     return tree[node_now] = make_tree(node_now*2, start, mid) + make_tree(node_now*2+1, mid+1, end);
@@ -25,7 +25,7 @@ void add_bias(int node_now, int start, int end, int i, int j, int k) {
 
 long long getAnswer(int target_node) {
     int idx = remember_idx[target_node];
-    long long ans = arr[target_node] + bias[idx];
+    long long ans = tree[idx] + bias[idx];
     while(idx > 1) {
         idx /= 2;
         ans += bias[idx];
