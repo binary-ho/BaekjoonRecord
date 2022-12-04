@@ -46,9 +46,8 @@ int main(int argc, char *argv[]) {
                 if (isJihun && !fire_check[r_now][c_now] && best > cost_now + 1) best = cost_now + 1;
                 continue;
             }
-            if (maze[next_r][next_c] == '#') continue;
-            if (isJihun && (maze_check[next_r][next_c] || fire_check[next_r][next_c])) continue;
-            if (!isJihun && fire_check[next_r][next_c]) continue;
+            if (maze[next_r][next_c] == '#' || fire_check[next_r][next_c]) continue;
+            if (isJihun && maze_check[next_r][next_c]) continue;
             que.push({{next_r, next_c}, {isJihun, cost_now + 1}});
             if (isJihun) maze_check[next_r][next_c] = true;
             else fire_check[next_r][next_c] = true;
