@@ -35,7 +35,6 @@ class Main {
                 grid[i][j] = Integer.parseInt(st.nextToken());
             }
         }
-        cnt = width = max = 0;
 
         for (int i = 0; i < n; i++) {
             for (int j = 0; j < m; j++) {
@@ -73,7 +72,7 @@ class Main {
     }
 
     static class Point{
-        public final int x, y;
+        public int x, y;
 
         public Point(int x, int y) {
             this.x = x;
