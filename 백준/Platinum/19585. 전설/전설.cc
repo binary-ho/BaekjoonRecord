@@ -1,17 +1,17 @@
 #include<iostream>
 #include<string>
 #include<vector>
-#include<map>
 #include<cstring>
 
 #define C_SIZE 26
-#define HASH_SIZE (1 << 12)
+#define HASH_SIZE (1 << 22)
 #define MAXN 5000
 #define DIV (HASH_SIZE-1)
+
 using namespace std;
 
 int toNum(char c) { return c - 'a'; }
-int colorMaxLength, teamMaxLength;
+int teamMaxLength;
 
 struct HashNode
 {
@@ -85,21 +85,9 @@ struct TrieNode
     }
 } colorRoot;
 
-//bool findTeam(TrieNode *node_now, const char* key) {
-//    if (*key == 0) {
-//        if (node_now->terminal == 2) return true;
-//        else return false;
-//    }
-////    int next = toNum(*key);
-//    if (node_now->children[*key] == 0) return false;
-//    return findTeam(node_now->children[*key], key + 1);
-//}
-
 bool findColor(TrieNode *node_now, const char* key) {
     if(*key == 0) return false;
     if (node_now->terminal == 1) {
-//        cout << key << '\n';
-//        if(findTeam(&teamRoot, key)) return true;
         if(findTeam(key)) return true;
     }
     int next = toNum(*key);
@@ -112,18 +100,17 @@ int main() {
     int C, N, Q;
     cin >> C >> N;
     char buffer[1001], buffer2[2001];
-    colorMaxLength = teamMaxLength = 0;
+    teamMaxLength = 0;
     for(int i = 0; i < C; i++) {
         scanf("%s", buffer);
         colorRoot.insert(buffer, 1);
     }
+    
     init();
     for(int i = 0; i < N; i++) {
         scanf("%s", buffer);
         addTeam(buffer);
-//        teamRoot.insert(buffer, 2);
     }
-//    colorRoot.terminal = teamRoot.terminal = true;
 
     cin >> Q;
     for(int i = 0; i < Q; i++) {
