@@ -1,5 +1,9 @@
 # [Gold III] 사회망 서비스(SNS) - 2533 
 
+별짓 다 했다. <br>
+그냥 dp, bfs하면서 dp, level order로 dp, level order로 아래 레벨 부터 dp, level 짝수 홀수로 체크, 리프 노드들만 모아서 출발하면서 dp.. 진짜 별 짓 다 한거 같다. <br>
+결국 전부 틀렸던 이유는 내 맘대로 u, v가 일종의 부모-자식 관계가 있다고 판단했던 것이다. 그래서 부모 자식이 무관하다고 생각한 다음 dfs로 방향을 틀어서 맞았다.
+
 [문제 링크](https://www.acmicpc.net/problem/2533) 
 
 ### 성능 요약
