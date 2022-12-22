@@ -21,26 +21,24 @@ int main() {
         gs25.emplace_back(x, y);
     }
 
-    int minLength, ansX, anxY;
-    minLength = ansX = anxY = INF;
-    int maxLength, maxI, maxJ, distNow;
+    int minLength, ansI;
+    minLength = ansI = INF;
+    int maxLength, maxI, distNow;
     for (int i = 0; i < N; i++) {
-        maxLength = maxI = maxJ = -1;
+        maxLength = maxI = -1;
         for (int j = 0; j < N; j++) {
             if (i == j) continue;
             distNow = getDistance(i, j);
             if (maxLength > distNow) continue;
             maxLength = distNow;
-            maxI = i; maxJ = j;
+            maxI = i;
         }
         if (maxLength == -1) continue;
         if (minLength < maxLength) continue;
         minLength = maxLength;
-        ansX = maxI; anxY = maxJ;
-
+        ansI = maxI;
     }
-    if (minLength == INF) ansX = 0;
-    cout << (double) gs25[ansX].first << " " << (double) gs25[ansX].second;
+    if (minLength == INF) ansI = 0;
+    cout << (double) gs25[ansI].first << " " << (double) gs25[ansI].second;
     return 0;
 }
-
