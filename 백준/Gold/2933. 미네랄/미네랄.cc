@@ -83,25 +83,18 @@ int main() {
             checkCnt++;
             if (getCluster(height + dy[k], j + dx[k])) continue;
 
-
             // 단절되었다. 이제 만난 놈들을 전부 내려줘야한다.
             std::sort(cluster.begin(), cluster.end(), greater<>());
-//            for (auto p : cluster) {
-//                cout << p.first << " " << p.second << '\n';
-//            }
             int moveCnt = 100, temp;
             for (auto axis : bottomPoint) {
                 temp = axis.second;
                 while (temp < R - 1 && !mineral[temp + 1][axis.first]) temp++;
                 if (moveCnt > temp - axis.second) moveCnt = temp - axis.second;
-//                cout << axis.second << " " << axis.first << " " << temp - axis.second << '\n';
             }
 
             if (moveCnt == 0) continue;
             for (auto axis : cluster) {
-                //cout << axis.first << " " << axis.second << '\n';
                 swap(mineral[axis.first][axis.second], mineral[axis.first + moveCnt][axis.second]);
-                swap(check[axis.first][axis.second], check[axis.first + moveCnt][axis.second]);
             }
             break;
         }
