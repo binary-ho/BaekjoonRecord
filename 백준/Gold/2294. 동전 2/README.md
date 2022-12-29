@@ -1,21 +1,5 @@
 # [Gold V] 동전 2 - 2294 
 
-배낭문제와 유사한 DP. 총 가격을 dp값으로 삼아 1원 부터 K원까지 전부 돌아가면서 표현 가능한 최소 코인 갯수를 갱신해 나간다.
-```cpp
-  std::sort(coinVector.begin(), coinVector.end(), less<>());
-  coinVector.erase(unique(coinVector.begin(), coinVector.end()), coinVector.end());
-
-  for (int price = 1; price <= K; price++) {
-      for (int coin : coinVector) {
-          if (price - coin <= 0) continue;
-          dp[price] = min(dp[price], dp[price - coin] + 1);
-      }
-  }
-```
-유니크 제거를 매번 검색하는데, 이번엔 좀 외우자. <br>
-정렬 -> erase(유니크)이다. <br>
-중복 입력이 있을 수 있는데, 갯수를 셀 때 방해되므로 전부 지워 주었고, 내림차순 정렬은 최소 동전 갯수로 가격을 표현하기 위해 도입했으나 사실 필요 없어 보인다.
-
 [문제 링크](https://www.acmicpc.net/problem/2294) 
 
 ### 성능 요약

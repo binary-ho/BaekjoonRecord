@@ -15,7 +15,7 @@ int main() {
         coinVector.emplace_back(input);
         dp[input] = 1;
     }
-    std::sort(coinVector.begin(), coinVector.end(), less<>());
+    std::sort(coinVector.begin(), coinVector.end());
     coinVector.erase(unique(coinVector.begin(), coinVector.end()), coinVector.end());
 
     for (int price = 1; price <= K; price++) {
