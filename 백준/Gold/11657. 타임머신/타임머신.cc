@@ -32,7 +32,7 @@ int main() {
     if (relaxation) cout << -1;
     else {
         for (int i = 2; i <= N; i++) {
-            if (dist[i] < INF - 100000000) cout << dist[i] << '\n';
+            if (dist[i] < INF - 10000000) cout << dist[i] << '\n';
             else cout << -1 << '\n';
         }
     }
