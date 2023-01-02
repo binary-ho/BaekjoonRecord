@@ -2,6 +2,9 @@
 
 [문제 링크](https://school.programmers.co.kr/learn/courses/30/lessons/118666?language=cpp) 
 
+13:10
+map을 이용해서 단순하게 입력 받고 처리해주었다.
+
 ### 성능 요약
 
 메모리: 4.14 MB, 시간: 0.05 ms
