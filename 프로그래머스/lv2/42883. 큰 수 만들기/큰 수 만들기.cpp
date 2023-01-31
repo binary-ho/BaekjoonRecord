@@ -52,9 +52,7 @@ string solution(string number, int k) {
     string answer;
     while (true) {
         answer += ptr->value + '0';
-        if (ptr->next == nullptr) break;
+        if (ptr->next == nullptr) return answer;
         ptr = ptr->next;
     }
-    
-    return answer;
 }
