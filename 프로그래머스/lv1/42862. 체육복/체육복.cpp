@@ -9,7 +9,6 @@ int solution(int n, vector<int> lost, vector<int> reserve) {
     set<int> lostSet;
     set<int> reserveSet;
     
-    std::sort(lost.begin(), lost.end());
     std::sort(reserve.begin(), reserve.end());
     
     for (int student : lost) {
@@ -17,7 +16,7 @@ int solution(int n, vector<int> lost, vector<int> reserve) {
     }
 
     for (int student : reserve) {
-        if (lostSet.count(student) != 0) {
+        if (lostSet.find(student) != lostSet.end()) {
             lostSet.erase(student);
             continue;
         }
@@ -25,13 +24,13 @@ int solution(int n, vector<int> lost, vector<int> reserve) {
     }
     
     for (int student : lostSet) {
-        if (student != 1 && reserveSet.count(student - 1) != 0) {
+        if (reserveSet.find(student - 1) != reserveSet.end()) {
             reserveSet.erase(student - 1);
             lostSet.erase(student);
             continue;
         }
         
-        if (student != n && reserveSet.count(student + 1) != 0) {
+        if (reserveSet.find(student + 1) != reserveSet.end()) {
             reserveSet.erase(student + 1);
             lostSet.erase(student);
             continue;
