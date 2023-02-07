@@ -48,8 +48,8 @@ public class Main {
                         }
                         ans += (long) leftCnt * rightCnt;
                     } else {
-                        ans += right - left;
-                        left++;
+                        ans += (right - left + 1) * (right - left) / 2;
+                        break;
                     }
                 } else if (sum > 0) {
                     right--;
