@@ -52,11 +52,9 @@ public class Main {
                         left++;
                     }
                 } else if (sum > 0) {
-                    sum -= codingPower[right--];
-                    sum += codingPower[right];
+                    right--;
                 } else  {
-                    sum -= codingPower[left++];
-                    sum += codingPower[left];
+                    left++;
                 }
             }
         }
