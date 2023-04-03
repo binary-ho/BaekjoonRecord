@@ -19,8 +19,5 @@ bool solution(string s)
         }
     }
     
-    if (!st.empty()) {
-        return false;
-    }
-    return true;
+    return st.empty();
 }
