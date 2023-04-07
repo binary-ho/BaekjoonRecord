@@ -15,6 +15,7 @@ int solution(vector<int> cit) {
 
     while (start <= end) {
         h = (start + end) / 2;
+        
         auto itr = lower_bound(cit.begin(), cit.end(), h);
         hCnt = cit.end() - itr;
         
