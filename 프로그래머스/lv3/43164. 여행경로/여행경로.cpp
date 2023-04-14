@@ -1,70 +1,63 @@
 #include <string>
 #include <vector>
-#include <algorithm>
-#include <stack>
 #include <map>
+#include <algorithm>
 
 using namespace std;
 
-int ticketsCnt, icn;
-vector<string> airport, ans;
-vector<pair<int, int>> vec[10001];
-map<string, int> airmap;
-stack<int> st;
-bool stop, check[10001];
+struct ticket {
+    string name;
+    bool check = false;
+    
+    ticket(string str) {
+        name = str;
+    }
+}; 
 
-void dfs(int now, int cnt) {
-    if (stop) return;
-    if (cnt == ticketsCnt) {
-        stop = true;
-        while (!st.empty()) {
-            ans.emplace_back(airport[st.top()]);
-            st.pop();
-        }
-        reverse(ans.begin(), ans.end());
+map<string, vector<ticket>> mp;
+vector<string> answer;
+vector<string> ans;
+int ticketCnt;
+bool pass;
+
+void dfs(string now, int cnt) {
+    if (pass) return;
+    if (cnt == ticketCnt) {
+        pass = true;
+        ans.insert(ans.begin(), answer.begin(), answer.end());
         return;
     }
     
-    for (int i = 0; i < vec[now].size(); i++) {
-        int next = vec[now][i].first;
-        int ticket = vec[now][i].second;
-        if (check[ticket]) continue;
-        st.push(next);
-        check[ticket] = true;
-        dfs(next, cnt + 1);
-        check[ticket] = false;
-        if (!st.empty()) st.pop();
+    for (int i = 0; i < mp[now].size(); i++) {
+        ticket &next = mp[now][i];
+        if (next.check) continue;
+        next.check = true;
+        answer.push_back(next.name);
+        dfs(next.name, cnt + 1);
+        if (pass) return;
+        answer.pop_back();
+        next.check = false;
     }
 }
 
-// 정렬
-// 모두 사용해서 도착 모두 사용해서 도착 모두 사용해서 도착 dfs?
-// 알파벳 순으로 순서를 알면 좋을 것 같다 그리고 숫자를 부여 해주면 좋을것 같다.
+bool cmp(vector<string> vec1, vector<string> vec2) {
+    if (vec1[0].compare(vec2[0]) != 0) {
+        return vec1[0] < vec2[0];
+    } else {
+        return vec1[1] < vec2[1];
+    }
+}
+
 vector<string> solution(vector<vector<string>> tickets) {
-    ticketsCnt = tickets.size();
-    sort(tickets.begin(), tickets.end());
-    
-    for (vector<string> v : tickets) {
-        airport.emplace_back(v[0]);
-        airport.emplace_back(v[1]);
-    }
-    sort(airport.begin(), airport.end());
-    airport.erase(unique(airport.begin(), airport.end()), airport.end());
-    
-    // 번호 부여
-    for (int i = 0; i < airport.size(); i++) {
-        airmap[airport[i]] = i;
+    sort(tickets.begin(), tickets.end(), cmp);
+
+    for (vector<string> vec : tickets) {
+        mp[vec[0]].push_back(ticket(vec[1]));
     }
     
-    int start, dist;
-    for (int i = 0; i < ticketsCnt; i++) {
-        start = airmap[tickets[i][0]];
-        dist = airmap[tickets[i][1]];
-        vec[start].emplace_back(dist, i);
-    }
+    ticketCnt = tickets.size();
     
-    icn = airmap["ICN"];
-    st.push(icn);
-    dfs(icn, 0);
-    return ans;
+    answer.push_back("ICN");
+    dfs("ICN", 0);
+    return answer;
 }
