@@ -24,7 +24,7 @@ int solution(int N, int number) {
     // 나누는것도 15번이면 충분해
     // 더하기 나누기는 10번만 하자 됨
 
-    for (int k = 0; k < 16; k++) {
+    for (int k = 0; k < 4; k++) {
         temp = N;
         for (int i = 1; i <= 8; i++) {
             dp[temp] = min(dp[temp], i);
