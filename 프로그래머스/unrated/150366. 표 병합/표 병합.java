@@ -70,11 +70,7 @@ class Solution {
     
     private void updateValByAxis(String r, String c, String newValue) {
         int ax = parent[axis(r, c)];
-        for (int i = 0; i < SIZE; i++) {
-            if (parent[i] == ax) {
-                table[ax].val = newValue;        
-            }
-        }
+        table[ax].val = newValue;       
     }
     
     private void updateValNewVal(String val1, String val2) {
