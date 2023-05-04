@@ -46,15 +46,17 @@ class Solution {
                         continue;
                     }
                     if (gSet.contains(edge.to)) continue;
-                    if (maxSummit != -1 && maxSummit < edge.cost) continue;
-
+                    if (maxSummit != -1 && maxSummit < edge.cost) continue;                    
+                    
                     intensities[edge.to] = temp;
+                    
                     if (sSet.contains(edge.to)) {
                         if (maxSummit < intensities[edge.to]) {
                             maxSummit = intensities[edge.to];
                         }
                         continue;
                     }
+                    
                     que.add(new Node(edge.to, temp));
                 }
             }
