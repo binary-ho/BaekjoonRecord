@@ -1,102 +1,94 @@
 import java.util.*;
-
+import static java.lang.Math.*;
 class Solution {
     
-    private static int nn;
-    private static int bongCnt;
-    private static ArrayList<Point>[] arr;
-    private static int[] ch;
-    private static int[] gg;
-    private static int[] ss;
-    
-    int tmpIntensity;
-    int bong = 50001;
-    int intensity = 10000000;
-    private static class Point {
-        int n;
-        int d;
-        
-        Point(int n, int d) {
-            this.n = n;
-            this.d = d;
-        }
-    }
-    
-    public void dikstra(int v) {
-        
-        if (intensity < ch[v]) return;
-        
-        for(int i=0; i<arr[v].size(); i++) {
-            int nx = arr[v].get(i).n; int nd = arr[v].get(i).d;
-            if (gg[nx] == 1) continue;
-            if (ch[nx] == 0
-                || (ch[nx] != 0 && (ch[v] < nd ? nd : ch[v]) < ch[nx])) {
-                
-                ch[nx] = ch[v] < nd ? nd : ch[v];
-                if (ss[nx] == 1) {
-                    if (ch[nx] < intensity) {
-                        bong = nx;
-                        intensity = ch[nx];
-                    }
-                    else if (ch[nx] == intensity && nx < bong) {
-                        bong = nx;
-                    }
-                    continue;
-                }
-                dikstra(nx);
-            }
-        }
-    }
+    int maxSummit = -1;
+    int[] intensities = new int[50001];
+    ArrayList<Edge>[] edges = new ArrayList[50001];
+    Set<Integer> gSet, sSet;
+    Queue<Node> que;
     
     public int[] solution(int n, int[][] paths, int[] gates, int[] summits) {
-        nn = n+1;
-        bongCnt = summits.length;
+        int[] answer = {0, 0};
         
-        arr = new ArrayList[nn];
-        ch = new int[nn];
-        gg = new int[nn];
-        ss = new int[nn];
+        gSet = new HashSet<>();
+        sSet = new HashSet<>();
         
-        
-        for(int i=1; i<=n; i++) {
-            arr[i] = new ArrayList<Point>();
-        }
-        for(int i=0; i<gates.length; i++) {
-            gg[gates[i]] = 1;
-        }
-        for(int i=0; i<summits.length; i++) {
-            ss[summits[i]] = 1;
+        for (int i = 0; i < 50001; i++) {
+            edges[i] = new ArrayList<>();
+            intensities[i] = -1;
         }
         
-        int minGate = 0, minCost = 10_000_001;
-        for(int i=0; i<paths.length; i++) {
-            int n1 = paths[i][0]; int n2 = paths[i][1]; int d = paths[i][2];
-            arr[n1].add(new Point(n2, d));
-            arr[n2].add(new Point(n1, d));
-            if (gg[n1] == 1 && minCost > d) {
-                minGate = n1;
-                minCost = d;
-            } else if (gg[n2] == 1 && minCost > d) {
-                minGate = n2;
-                minCost = d;
+        que = new LinkedList<Node>();
+        for (int i = 0; i < gates.length; i++) {
+            gSet.add(gates[i]);
+            intensities[gates[i]] = 0;
+        }
+        
+        for (int i = 0; i < summits.length; i++) {
+            sSet.add(summits[i]);
+        }
+        
+        for (int i = 0; i < paths.length; i++) {
+            edges[paths[i][0]].add(new Edge(paths[i][1], paths[i][2]));
+            edges[paths[i][1]].add(new Edge(paths[i][0], paths[i][2]));
+        }
+        
+        for (int gate : gSet) {
+            que.add(new Node(gate, 0));
+            while(!que.isEmpty()) {
+                Node node = que.poll();
+
+                for (int i = 0; i < edges[node.next].size(); i++) {
+                    Edge edge = edges[node.next].get(i);
+                    int temp = max(node.intensity, edge.cost);
+                    if (intensities[edge.to] != -1 && intensities[edge.to] <= temp) {
+                        continue;
+                    }
+                    if (gSet.contains(edge.to)) continue;
+                    if (maxSummit != -1 && maxSummit < edge.cost) continue;
+                    // if (!sSet.contains(edge.to) && maxSummit == edge.cost) continue;
+                    
+                    intensities[edge.to] = temp;
+                    if (sSet.contains(edge.to)) {
+                        if (maxSummit < intensities[edge.to]) {
+                            maxSummit = intensities[edge.to];
+                        }
+                        continue;
+                    }
+                    que.add(new Node(edge.to, temp));
+                }
             }
         }
         
-        dikstra(minGate);
-        for(int i: gates) {
-            dikstra(i);
-        }
-        for(int j=0; j<summits.length; j++) {
-            if (ch[summits[j]] != 0 && ch[summits[j]] < intensity) {
-                bong = summits[j];
-                intensity = ch[summits[j]];
-            }
-            else if (ch[summits[j]] == intensity && summits[j] < bong) {
-                bong = summits[j];
+        
+        int distMin = 10_000_001;
+        for (int summit : sSet) {
+            if (intensities[summit] != -1 && distMin >= intensities[summit]) {
+                if (distMin == intensities[summit] 
+                    && answer[0] < summit) continue;
+                distMin = intensities[summit];
+                answer[1] = intensities[summit];
+                answer[0] = summit;
             }
         }
-        int[] ans = new int[2];
-        ans[0] = bong; ans[1] = intensity;
-        return ans;
+        
+        return answer;
+    }
+    
+    class Edge {
+        int to, cost;
+        Edge(int to, int cost) {
+            this.to = to;
+            this.cost = cost;
+        }
+    }
+    
+    class Node {
+        int next, intensity;
+        Node (int next, int intensity) {
+            this.next = next; 
+            this.intensity = intensity;
+        }
     }
 }
