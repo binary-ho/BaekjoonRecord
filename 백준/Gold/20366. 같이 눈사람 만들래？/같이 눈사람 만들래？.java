@@ -26,8 +26,6 @@ public class Main {
             snow[i] = Integer.parseInt(st.nextToken());
         }
 
-        Arrays.sort(snow);
-
         int N2 = N * (N - 1) / 2;
         snowMan = new Snow[N2];
 
