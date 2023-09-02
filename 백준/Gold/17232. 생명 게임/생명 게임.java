@@ -20,8 +20,9 @@ class Main {
         // count
         int lifeCount = 0;
         for (int i = y - K; i <= y + K; i++) {
+            if (i < 0 || i >= N) continue;;
             for (int j = x - K; j <= x + K; j++) {
-                if (i < 0 || i >= N || j < 0 || j >= M) continue;
+                if (j < 0 || j >= M) continue;
                 if (i == y && j == x) continue;
 
                 if (lifeMap[phase][i][j]) {
@@ -86,4 +87,5 @@ class Main {
         }
     }
 }
+
 
