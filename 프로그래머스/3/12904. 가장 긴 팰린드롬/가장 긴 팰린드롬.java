@@ -27,10 +27,6 @@ class Solution {
         int answer = 1;
         
         for (int i = 0; i < str.length(); i++) {
-            pailn[i][i] = true;
-        }
-        
-        for (int i = 0; i < str.length(); i++) {
             for (int length = 1; i + length <= str.length(); length++) {
                 if (!test(i, i + length - 1, str)) {
                     continue;
