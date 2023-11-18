@@ -1,6 +1,6 @@
 # [level 4] [카카오 인턴] 동굴 탐험 - 67260 
 
-[문제 링크](https://school.programmers.co.kr/learn/courses/30/lessons/67260#qna) 
+[문제 링크](https://school.programmers.co.kr/learn/courses/30/lessons/67260) 
 
 ### 성능 요약
 
@@ -16,7 +16,7 @@
 
 ### 제출 일자
 
-2023년 11월 0일 1:24:57
+2023년 11월 0일 1:25:55
 
 ### 문제 설명
 
