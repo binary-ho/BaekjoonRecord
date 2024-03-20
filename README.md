@@ -1,3 +1,4 @@
+# 백준 자동 커밋 extenstion 삭제
 # BaekjoonRecord
 This is a auto push repository for Baekjoon Online Judge created with [BaekjoonHub](https://github.com/BaekjoonHub/BaekjoonHub).
 
